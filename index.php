@@ -1,5 +1,6 @@
 <?php
 include_once 'config.php';
+include_once 'functions.php';
 include_once 'tasks.php';
 
 $connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
@@ -31,6 +32,14 @@ if(!$connection){
 			</div>
 			<div class="formc" style="background-color: #fff;padding: 25px;box-shadow: 5px 5px 5px grey;">
 				<form id="form01" method="post" action="tasks.php">
+                    <p>
+                        <?php $status = $_GET['status'] ?? '';
+                            if($status){
+                                echo getStatusCode($status);
+                            }
+                        ?>
+                    </p>
+
 					<h3>Login</h3>
 					<fieldset>
 						<label for="email">Email</label>

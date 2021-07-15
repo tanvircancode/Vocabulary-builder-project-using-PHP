@@ -1,34 +1,39 @@
-<?
-include_once ('config.php');
+<?php
+include_once 'config.php';
+$statusCode = 0;
 $connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
 if(!$connection){
     throw new Exception("Not connected<br>");
 }
-else{
 
-$action = $_POST['action'];
 
-if($action == "register"){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+$action = $_POST['action'] ?? '';
+
+if($action == 'register'){
+
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
     if($email && $password){
         $password = password_hash($password, PASSWORD_BCRYPT);
         $query = "insert into users(email,password) values ('$email','$password')" ;
         $res = mysqli_query($connection, $query);
         if(mysqli_error($connection)){
-            // duplicate email entered
+            $statusCode = 1;
+            // Duplicate email entered
         }
         else{
-            // created successfully
+            $statusCode = 2;
+            // Created successfully
         }
-
     }
     else
     {
-        // email or pass empty
+        $statusCode = 3;
+        // Email or password empty
     }
+    header("location:index.php?status={$statusCode}");
 }
-else if($action == "login"){
+else if($action == 'login'){
     $email = $_POST['email'];
     $password = $_POST['password'];
     if($email && $password){
@@ -57,6 +62,6 @@ else if($action == "login"){
         // email or pass empty
     }
 }
-}
+
 
 ?>
