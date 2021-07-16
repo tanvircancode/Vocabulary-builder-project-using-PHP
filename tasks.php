@@ -38,7 +38,7 @@ else if($action == 'login'){
     $password = $_POST['password'];
     if($email && $password){
         // $password = password_hash($password,PASSWORD_BCRYPT);
-        $query = "select id,password from words where email = '$email' " ;
+        $query = "select id,password from users where email = '{$email}' " ;
         $res = mysqli_query($connection,$query);
         if(mysqli_num_rows($res) > 0){
             $data = mysqli_fetch_assoc($res);
@@ -46,21 +46,25 @@ else if($action == 'login'){
             $id = $data['id'];
             if(password_verify($password,$pass)){
                 $_SESSION['id'] = $data['id'];
-                header('location:');
+                header('location:words.php');
                 return;
                 // successfully login
             }
             else{
+                $statusCode = 4;
                 // email and password not matched
             }
         }
         else{
+            $statusCode = 5;
             // no user registered with this email
         }
     }
     else{
-        // email or pass empty
+        $statusCode = 6;
+        // Email or pass empty
     }
+    header("location:index.php?status={$statusCode}");
 }
 
 

@@ -11,4 +11,13 @@ function getStatusCode($status){
     else if($status==3){
         return "Email or password empty";
     }
+    else if($status==4){
+        return "Email and password not matched";
+    }
+    else if($status==5){
+        return "No user registered with this email";
+    }
+    else if($status==6){
+        return "Email or pass empty";
+    }
 }
