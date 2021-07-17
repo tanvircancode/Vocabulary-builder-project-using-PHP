@@ -40,7 +40,7 @@ if(!$connection){
                         ?>
                     </p>
 
-					<h3>Login</h3>
+					<h3 id="logregheader">Login</h3>
 					<fieldset>
 						<label for="email">Email</label>
 						<input type="text" name="email" id="email" placeholder="Enter Email">
@@ -62,3 +62,17 @@ if(!$connection){
 <script src="//code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="assets/js/script.js"></script>
 </html>
+
+<script>
+  $("#login").click(function(){
+    let log = document.getElementById("logregheader");
+    log.innerHTML = "Login";
+    $("#action").val("login");
+  })
+
+  $("#register").click(function(){
+    let reg = document.getElementById("logregheader");
+    log.innerHTML = "Register";
+    $("#action").val("register");
+  })
+</script>
