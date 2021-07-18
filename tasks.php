@@ -1,15 +1,18 @@
 <?php
 
 if(!isset($_SESSION['id'])){
-        session_start();
+    session_start();
 }
 
 include_once 'config.php';
 $statusCode = 0;
 $connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+mysqli_set_charset($connection, "utf8");
 if(!$connection){
     throw new Exception("Not connected<br>");
 }
+
+else{
 
 
 $action = $_POST['action'] ?? '';
@@ -70,6 +73,21 @@ else if($action == 'login'){
         // Email or pass empty
     }
     header("location:index.php?status={$statusCode}");
+}
+else if($action == "addword"){
+    $word = $_POST['word'] ?? '';
+    $meaning = $_POST['meaning'] ?? '';
+    $user_id = $_SESSION['id'] ?? '';
+
+    if($word && $meaning && $user_id){
+        $query = "insert into words(user_id,word,meaning) values('$user_id','$word','$meaning')" ;
+        $res = mysqli_query($connection, $query);
+    }
+
+
+
+}
+
 }
 
 
