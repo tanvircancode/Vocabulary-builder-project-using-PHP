@@ -18,6 +18,6 @@ function getStatusCode($status){
         return "No user registered with this email";
     }
     else if($status==6){
-        return "Email or pass empty";
+        return "Email or password empty";
     }
 }

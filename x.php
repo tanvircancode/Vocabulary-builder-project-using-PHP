@@ -3,11 +3,11 @@
 session_start();
 
 $_SESSION['id'] = $_SESSION['id'] ?? '';
+// echo $_SESSION['id']."ss";exit;
 if(!$_SESSION['id']){
     header('location:index.php');
     return;
-}
- ?>
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,11 +92,3 @@ if(!$_SESSION['id']){
 <script src="//code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="assets/js/script.js?1"></script>
 </html>
-
-<script>
-    $(".menu-item").click(function(){
-        $(".helement").hide();
-        var target = "#" + $(this).data("target");
-        $(target).show();
-    })
-</script>

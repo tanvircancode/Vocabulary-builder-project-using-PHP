@@ -1,4 +1,9 @@
 <?php
+
+if(!isset($_SESSION['id'])){
+        session_start();
+}
+
 include_once 'config.php';
 $statusCode = 0;
 $connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
@@ -34,8 +39,8 @@ if($action == 'register'){
     header("location:index.php?status={$statusCode}");
 }
 else if($action == 'login'){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
     if($email && $password){
         // $password = password_hash($password,PASSWORD_BCRYPT);
         $query = "select id,password from users where email = '{$email}' " ;
@@ -45,7 +50,7 @@ else if($action == 'login'){
             $pass = $data['password'];
             $id = $data['id'];
             if(password_verify($password,$pass)){
-                $_SESSION['id'] = $data['id'];
+                $_SESSION['id'] = $id;
                 header('location:words.php');
                 return;
                 // successfully login

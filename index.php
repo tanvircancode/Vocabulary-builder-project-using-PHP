@@ -1,4 +1,15 @@
 <?php
+
+if(!isset($_SESSION['id'])){
+    session_start();
+}
+
+$_SESSION['id'] = $_SESSION['id'] ?? '';
+if($_SESSION['id']){
+    header('location: words.php');
+    return;
+}
+
 include_once 'config.php';
 include_once 'functions.php';
 include_once 'tasks.php';
@@ -72,7 +83,7 @@ if(!$connection){
 
   $("#register").click(function(){
     let reg = document.getElementById("logregheader");
-    log.innerHTML = "Register";
+    reg.innerHTML = "Register";
     $("#action").val("register");
   })
 </script>
