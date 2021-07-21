@@ -1,10 +1,12 @@
 <?php
 
+include_once 'config.php';
+
 if(!isset($_SESSION['id'])){
     session_start();
 }
 
-include_once 'config.php';
+
 $statusCode = 0;
 $connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
 mysqli_set_charset($connection, "utf8");
@@ -83,9 +85,7 @@ else if($action == "addword"){
         $query = "insert into words(user_id,word,meaning) values('$user_id','$word','$meaning')" ;
         $res = mysqli_query($connection, $query);
     }
-
-
-
+   header('location: words.php');
 }
 
 }

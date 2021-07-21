@@ -1,11 +1,20 @@
 <?php
+include_once 'config.php';
+require_once 'functions.php';
 
 session_start();
 
 $_SESSION['id'] = $_SESSION['id'] ?? '';
+$user_id = $_SESSION['id'];
 if(!$_SESSION['id']){
     header('location:index.php');
     return;
+}
+
+$connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+mysqli_set_charset($connection, "utf8");
+if(!$connection){
+    throw new Exception("Not connected<br>");
 }
  ?>
 <!DOCTYPE html>
@@ -56,22 +65,31 @@ if(!$_SESSION['id']){
         </div>
         <hr>
 
-        <table class="words helement" >
+        <table class="words helement">
             <thead>
             <tr>
                 <th width="20%">Word</th>
                 <th>Definition</th>
             </tr>
             </thead>
+            <?php
+            $result = getWords($user_id);
+            if(mysqli_num_rows($result)>0){
+
+            while($data = mysqli_fetch_assoc($result)){
+
+            ?>
             <tbody>
 
 				<tr>
-					<td></td>
-					<td></td>
+					<td><?php echo $data['word']; ?></td>
+					<td><?php echo $data['meaning']; ?></td>
 				</tr>
 
             </tbody>
+            <?php } } ?>
         </table>
+
    </div>
 
     <div class="formc helement" id="wordform" style="display: none;">
