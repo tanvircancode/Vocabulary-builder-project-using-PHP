@@ -30,9 +30,14 @@ function getStatusCode($status){
     }
 }
 
-function getWords($user_id){
+function getWords($user_id, $search=null){
     global $connection;
-    $query = "select word,meaning from words where user_id = '{$user_id}' ";
+    if($search){
+       $query = "select * from words where user_id = '{$user_id}' and word like '{$search}%' order by word";
+       $res = mysqli_query($connection, $query);
+       return $res;
+    }
+    $query = "select * from words where user_id = '{$user_id}' order by word";
     $res = mysqli_query($connection, $query);
     return $res;
 }

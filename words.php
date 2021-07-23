@@ -6,17 +6,17 @@ session_start();
 
 $_SESSION['id'] = $_SESSION['id'] ?? '';
 $user_id = $_SESSION['id'];
-if(!$_SESSION['id']){
+if (!$_SESSION['id']) {
     header('location:index.php');
     return;
 }
 
-$connection = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 mysqli_set_charset($connection, "utf8");
-if(!$connection){
+if (!$connection) {
     throw new Exception("Not connected<br>");
 }
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,12 +76,20 @@ if(!$connection){
             </tr>
             </thead>
             <?php
+
+        if(isset($_POST['submit'])){
+            $searchedText = $_POST['search'];
+            $result = getWords($user_id,$searchedText);
+        }
+        else{
             $result = getWords($user_id);
-            if(mysqli_num_rows($result)>0){
+        }
 
-            while($data = mysqli_fetch_assoc($result)){
+         if (mysqli_num_rows($result) > 0) {
 
-            ?>
+          while ($data = mysqli_fetch_assoc($result)) {
+
+        ?>
             <tbody>
 
 				<tr>
@@ -90,7 +98,7 @@ if(!$connection){
 				</tr>
 
             </tbody>
-            <?php } } ?>
+            <?php }}?>
         </table>
 
    </div>
@@ -122,9 +130,18 @@ if(!$connection){
     })
 
     $("#alphabets").on('change', function(){
-        var char = $(this).val().toLowerCase();
-        $(".words tr:gt(0)")hide();
-        alert(char);
+        var char = $(this).val();
+
+
+        if(char == 'all'){
+          $(".words tr").show();
+          return true;
+        }
+        $(".words tr:gt(0)").hide();
+
+        $(".words td").filter(function(){
+            return $(this).text().indexOf(char)==0;
+        }).parent().show();
     })
 
 
