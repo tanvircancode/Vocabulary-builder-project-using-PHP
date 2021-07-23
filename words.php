@@ -48,8 +48,11 @@ if(!$connection){
                 <div class="alphabets">
                     <select id="alphabets">
                         <option value="all">All Words</option>
-
-                              <option value="<?php echo $char; ?>"></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <!-- <option value="<?php echo $char; ?>"></option> -->
 
                     </select>
                 </div>
@@ -117,4 +120,12 @@ if(!$connection){
         var target = "#" + $(this).data("target");
         $(target).show();
     })
+
+    $("#alphabets").on('change', function(){
+        var char = $(this).val().toLowerCase();
+        $(".words tr:gt(0)")hide();
+        alert(char);
+    })
+
+
 </script>
