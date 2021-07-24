@@ -48,11 +48,11 @@ if (!$connection) {
                 <div class="alphabets">
                     <select id="alphabets">
                         <option value="all">All Words</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <!-- <option value="<?php echo $char; ?>"></option> -->
+                        <?php for($i=65;$i<=90;$i++) { ?>
+                        <option value="<?php echo chr($i); ?>"><?php echo chr($i); ?></option>
+
+                        <?php } ?>
+                        
 
                     </select>
                 </div>
